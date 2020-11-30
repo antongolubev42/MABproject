@@ -9,22 +9,26 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float downAcceleration=0.75f;
     [SerializeField] private float xSpeed=10.0f;
 
+    public AnimalController animalcontroller;
     private Vector3 velocity;
     private Rigidbody rb;
     private Animator animator;
+    
     private int jumpInput=0;
     private bool onGround=false;
     private float xMovement=0f;
-    private int slideInput=0;
+    public int barkInput=0;
     public bool IsDead=false;
+
 
     // Start is called before the first frame update
     void Start()
     {
+        
         rb=GetComponent<Rigidbody>();
         animator=GetComponent<Animator>();
         velocity= Vector3.zero;
-
+        //animalcontroller=GameObject.FindGameObjectWithTag("Animal").GetComponent<AnimalController>();
         
     }
 
@@ -59,7 +63,7 @@ public class PlayerController : MonoBehaviour
 
         else if(Input.GetKeyDown(KeyCode.S)) //Jump
         {
-            slideInput=1;
+            barkInput=1;
             Debug.Log("Bark");
         }
 
@@ -119,10 +123,11 @@ public class PlayerController : MonoBehaviour
 
     void Bark()
     {
-        if(slideInput==1)
+        if(barkInput==1)
         {          
-            animator.SetTrigger("Slide");
-            slideInput=0;
+            animator.SetTrigger("Bark");
+            barkInput=0;
+            animalcontroller.Run();
         }
     }
     
